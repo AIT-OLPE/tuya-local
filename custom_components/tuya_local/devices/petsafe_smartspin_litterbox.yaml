@@ -1,0 +1,297 @@
+name: Litter box
+products:
+  - id: aarxvbivthcyz65a
+    manufacturer: PetSafe
+    model: ScoopFree SmartSpin
+entities:
+  - entity: sensor
+    name: Status
+    icon: "mdi:cat"
+    class: enum
+    dps:
+      - id: 24
+        type: string
+        optional: true
+        name: sensor
+        mapping:
+          - dps_val: standby
+            value: Standby
+          - dps_val: waiting
+            value: Waiting to clean
+          - dps_val: cleaning
+            value: Cleaning
+          - dps_val: cat_get_in
+            value: Cat inside
+          - dps_val: pause
+            value: Paused
+          - dps_val: garbage_box_full
+            value: Waste drawer full
+          - dps_val: Error
+            value: Error
+  - entity: select
+    name: Cleaning
+    icon: "mdi:shimmer"
+    dps:
+      - id: 106
+        type: string
+        optional: true
+        name: option
+        mapping:
+          - dps_val: standby
+            value: Idle
+          - dps_val: cleaning
+            value: Clean now
+          - dps_val: pause
+            value: Pause
+  - entity: sensor
+    name: Last event
+    icon: "mdi:history"
+    class: enum
+    dps:
+      - id: 107
+        type: string
+        optional: true
+        name: sensor
+        mapping:
+          - dps_val: enter
+            value: Cat entered
+          - dps_val: done
+            value: Cat left
+          - dps_val: finish_clean
+            value: Cleaning finished
+          - dps_val: garbage_full
+            value: Waste drawer full
+          - dps_val: E1
+            value: Error E1
+          - dps_val: E2
+            value: Error E2
+          - dps_val: E3
+            value: Error E3
+          - dps_val: E4
+            value: Error E4
+  - entity: sensor
+    name: Visits today
+    icon: "mdi:paw"
+    dps:
+      - id: 7
+        type: integer
+        optional: true
+        name: sensor
+        unit: visits
+        class: total_increasing
+  - entity: sensor
+    name: Last visit duration
+    class: duration
+    icon: "mdi:timer-sand"
+    dps:
+      - id: 102
+        type: base64
+        optional: true
+        name: sensor
+        unit: s
+        mask: "FFFF0000"
+        class: measurement
+  - entity: sensor
+    name: Cat weight
+    class: weight
+    icon: "mdi:cat"
+    dps:
+      - id: 102
+        type: base64
+        optional: true
+        name: sensor
+        unit: kg
+        mask: "0000FFFF"
+        class: measurement
+        mapping:
+          - scale: 1000
+  - entity: binary_sensor
+    name: Waste drawer full
+    icon: "mdi:delete-alert"
+    dps:
+      - id: 21
+        type: bitfield
+        optional: true
+        name: sensor
+        mapping:
+          - dps_val: 1
+            value: true
+          - dps_val: 3
+            value: true
+          - dps_val: 5
+            value: true
+          - dps_val: 7
+            value: true
+          - dps_val: 9
+            value: true
+          - dps_val: 11
+            value: true
+          - dps_val: 13
+            value: true
+          - dps_val: 15
+            value: true
+          - dps_val: 17
+            value: true
+          - dps_val: 19
+            value: true
+          - dps_val: 21
+            value: true
+          - dps_val: 23
+            value: true
+          - dps_val: 25
+            value: true
+          - dps_val: 27
+            value: true
+          - dps_val: 29
+            value: true
+          - dps_val: 31
+            value: true
+          - value: false
+      - id: 21
+        type: bitfield
+        optional: true
+        name: notification_code
+  - entity: binary_sensor
+    class: problem
+    category: diagnostic
+    dps:
+      - id: 22
+        type: bitfield
+        optional: true
+        name: sensor
+        mapping:
+          - dps_val: 0
+            value: false
+          - value: true
+      - id: 22
+        type: bitfield
+        optional: true
+        name: fault_code
+  - entity: sensor
+    name: Motor current
+    class: current
+    category: diagnostic
+    hidden: true
+    dps:
+      - id: 101
+        type: integer
+        optional: true
+        name: sensor
+        unit: mA
+        class: measurement
+  - entity: switch
+    translation_key: auto_clean
+    category: config
+    dps:
+      - id: 4
+        type: boolean
+        optional: true
+        name: switch
+  - entity: number
+    name: Clean delay
+    category: config
+    class: duration
+    icon: "mdi:timer"
+    dps:
+      - id: 5
+        type: integer
+        optional: true
+        name: value
+        unit: min
+        range:
+          min: 1
+          max: 60
+  - entity: switch
+    name: Quiet hours
+    icon: "mdi:sleep"
+    category: config
+    dps:
+      - id: 10
+        type: boolean
+        optional: true
+        name: switch
+  - entity: time
+    name: Quiet hours start
+    category: config
+    dps:
+      - id: 11
+        type: integer
+        optional: true
+        name: minute
+        range:
+          min: 0
+          max: 1435
+  - entity: time
+    name: Quiet hours end
+    category: config
+    dps:
+      - id: 12
+        type: integer
+        optional: true
+        name: minute
+        range:
+          min: 0
+          max: 1435
+  - entity: light
+    dps:
+      - id: 16
+        type: boolean
+        optional: true
+        name: switch
+  - entity: lock
+    translation_key: child_lock
+    category: config
+    dps:
+      - id: 103
+        type: boolean
+        optional: true
+        name: lock
+  - entity: switch
+    name: Sound
+    icon: "mdi:volume-high"
+    category: config
+    dps:
+      - id: 105
+        type: boolean
+        optional: true
+        name: switch
+  - entity: switch
+    name: Indicator light
+    icon: "mdi:led-on"
+    category: config
+    dps:
+      - id: 109
+        type: boolean
+        optional: true
+        name: switch
+  - entity: switch
+    name: Deodorizer
+    icon: "mdi:air-filter"
+    dps:
+      - id: 111
+        type: boolean
+        optional: true
+        name: switch
+  - entity: select
+    name: Weight unit
+    icon: "mdi:scale"
+    category: config
+    dps:
+      - id: 110
+        type: string
+        optional: true
+        name: option
+        mapping:
+          - dps_val: Kg
+            value: kg
+          - dps_val: lb
+            value: lb
+  - entity: binary_sensor
+    name: Factory reset
+    category: diagnostic
+    hidden: true
+    dps:
+      - id: 23
+        type: boolean
+        optional: true
+        name: sensor
